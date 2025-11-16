@@ -72,7 +72,7 @@ class Partition(QWidget):
 
         self.layout = QVBoxLayout()
         self.layout.setContentsMargins(20, 20, 20, 20)
-        self.layout.setSpacing(20)
+        self.layout.setSpacing(15)
         self.setLayout(self.layout)
 
     def add_widget(self, widget):

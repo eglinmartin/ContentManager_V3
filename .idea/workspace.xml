@@ -4,15 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b09d4f8b-2cb0-42f0-8da3-4515a9898862" name="Changes" comment="Initial layout with basic preview panel - hardcoded text">
+    <list default="true" id="b09d4f8b-2cb0-42f0-8da3-4515a9898862" name="Changes" comment="Add placeholder buttons to preview panel">
       <change afterPath="$PROJECT_DIR$/bin/0" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bin/1" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bin/2" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/bin/3" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/handler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/selector_panel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/contentmanager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/contentmanager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/preview_panel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/preview_panel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/widgets.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,11 +126,20 @@
       <option name="project" value="LOCAL" />
       <updated>1763305552146</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add placeholder buttons to preview panel">
+      <option name="closed" value="true" />
+      <created>1763309135758</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1763309135758</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial layout with basic preview panel - hardcoded text" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial layout with basic preview panel - hardcoded text" />
+    <MESSAGE value="Add placeholder buttons to preview panel" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add placeholder buttons to preview panel" />
   </component>
 </project>
