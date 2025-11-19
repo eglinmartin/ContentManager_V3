@@ -15,7 +15,8 @@ class SelectorItem(QWidget):
 
         # Create vertical box
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
 
         # Create image button
         self.image_button = QPushButton()
@@ -50,7 +51,7 @@ class SelectorPanel(Partition):
     def __init__(self, player, color, media_list):
         super().__init__(color)
 
-        # self.layout.setContentsMargins(20, 20, 20, 20)
+        self.layout.setContentsMargins(20, 20, 20, 20)
         self.layout.setAlignment(Qt.AlignTop)
 
         # Create scroll area
