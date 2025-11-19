@@ -15,7 +15,7 @@ class SelectorItem(QWidget):
 
         # Create vertical box
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setContentsMargins(20, 20, 20, 20)
 
         # Create image button
         self.image_button = QPushButton()
@@ -31,7 +31,7 @@ class SelectorItem(QWidget):
         self.title_label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
 
         # Set font, font size and wrapping
-        self.text_font = QFont("Bahnschrift Semibold", int(7 * player.font_multiplier))
+        self.text_font = QFont("Bahnschrift Semibold", int(10 * player.font_multiplier))
         self.title_label.setFont(self.text_font)
         self.title_label.setWordWrap(True)
 
