@@ -20,7 +20,7 @@ class SelectorItem(QWidget):
 
         # Create image button
         self.image_button = QPushButton()
-        self.image_button.setIcon(QIcon(fr"C:\Storage\Programming\ContentManager_V3\bin\{med_item.code}"))
+        self.image_button.setIcon(player.get_icon(fr"C:\Storage\Programming\ContentManager_V3\bin\{med_item.code}"))
         self.image_button.clicked.connect(lambda: player.select_media(med_item.code))
         self.image_button.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
@@ -31,7 +31,7 @@ class SelectorItem(QWidget):
         self.title_label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
 
         # Set font, font size and wrapping
-        self.text_font = QFont("Bahnschrift Semibold", 14)
+        self.text_font = QFont("Bahnschrift Semibold", 11)
         self.title_label.setFont(self.text_font)
         self.title_label.setWordWrap(True)
 
@@ -43,13 +43,14 @@ class SelectorItem(QWidget):
         self.image_button.setFixedHeight(int(self.image_button.width() * 0.562))
         self.title_label.setFixedWidth(int(self.image_button.width()))
         self.title_label.setFixedHeight(int(self.image_button.width()/4))
-        self.setFixedHeight(int(self.image_button.width()/3) + int(self.image_button.height()))
+        self.setFixedHeight(int(self.image_button.width()/4) + int(self.image_button.height()))
 
 
 class SelectorPanel(Partition):
     def __init__(self, player, color):
         super().__init__(color)
         self.player = player
+        self.icon_cache = {}
 
         self.layout.setContentsMargins(20, 20, 20, 20)
         self.layout.setAlignment(Qt.AlignTop)
@@ -106,6 +107,7 @@ class SelectorPanel(Partition):
 
         self.scroll_area.widget().updateGeometry()
         self.updateGeometry()
+
         self.adjust_buttons_sizes()
 
     def adjust_buttons_sizes(self):

@@ -23,7 +23,7 @@ class Browser(QListWidget):
             QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: #222222;}
             """)
 
-        self.browser_font = QFont("Bahnschrift Semibold", 14)
+        self.browser_font = QFont("Bahnschrift Semibold", 12)
         self.setFont(self.browser_font)
 
         self.itemClicked.connect(lambda item: player.filter_media(item.text(), 'cast'))
@@ -32,7 +32,7 @@ class Browser(QListWidget):
 class BrowserPanel(Partition):
     def __init__(self, player, color):
         super().__init__(color)
-        self.setContentsMargins(10, 10, 10, 10)
+        self.setContentsMargins(16, 16, 16, 16)
 
         self.list_widget = Browser(player, color)
 

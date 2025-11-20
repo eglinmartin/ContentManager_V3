@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b09d4f8b-2cb0-42f0-8da3-4515a9898862" name="Changes" comment="Import from database in handler">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="b09d4f8b-2cb0-42f0-8da3-4515a9898862" name="Changes" comment="Font size changes for 1080p monitors">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/browser_panel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/browser_panel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/contentmanager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/contentmanager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/preview_panel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/preview_panel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/selector_panel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/selector_panel.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -76,7 +74,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/contentmanager.py" />
-      <option name="PARAMETERS" value="-j &quot;C:\Storage\Videos\Movies\movies.db&quot;" />
+      <option name="PARAMETERS" value="-j &quot;C:\Storage\Videos\Movies\Movies.db&quot;" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="true" />
       <option name="MODULE_MODE" value="false" />
@@ -194,7 +192,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763589171683</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Font size changes for 1080p monitors">
+      <option name="closed" value="true" />
+      <created>1763659816242</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1763659816243</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -219,6 +225,7 @@
     <MESSAGE value="Adjust selector panel alignment - fix" />
     <MESSAGE value="Browser panel and optimizations to selector." />
     <MESSAGE value="Import from database in handler" />
-    <option name="LAST_COMMIT_MESSAGE" value="Import from database in handler" />
+    <MESSAGE value="Font size changes for 1080p monitors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Font size changes for 1080p monitors" />
   </component>
 </project>
