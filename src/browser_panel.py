@@ -37,7 +37,7 @@ class BrowserPanel(Partition):
         self.list_widget = Browser(player, color, screen_scale)
 
         # unique_items = {'All'} | {actor for med in player.media for actor in med.cast}
-        unique_items = {'All'} | {item.director for item in player.media}
+        unique_items = {'All'} | {f'{item.director} ({len([m for m in player.media if item.director == m.director])})' for item in player.media}
         sorted_items = sorted(unique_items)
 
         for item in sorted_items:

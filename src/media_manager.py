@@ -232,7 +232,8 @@ class MainWindow(QMainWindow):
             if self.filter_column == 'cast':
                 self.filtered_media = [med for med in self.filtered_media if self.filter_item in med.cast]
             elif self.filter_column == 'director':
-                self.filtered_media = [med for med in self.filtered_media if self.filter_item in med.director]
+                print(str(self.filter_item).split(' (')[0])
+                self.filtered_media = [med for med in self.filtered_media if str(self.filter_item).split(' (')[0] in med.director]
                 pass
 
         if self.bottom_bar.searchbar.text():
