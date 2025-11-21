@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b09d4f8b-2cb0-42f0-8da3-4515a9898862" name="Changes" comment="Big changes to preview panel, small styling changes">
+    <list default="true" id="b09d4f8b-2cb0-42f0-8da3-4515a9898862" name="Changes" comment="Add database editing for title, director, cast and tags">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/browser_panel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/browser_panel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/media_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/media_manager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/preview_panel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/preview_panel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/widgets.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/widgets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/selector_panel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/selector_panel.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +53,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python.Content Manager.executor": "Run",
+    "Python.Movies.executor": "Run",
+    "Python.NSFW.executor": "Run",
     "Python.contentmanager.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
@@ -60,8 +62,8 @@
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration name="Content Manager" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.NSFW">
+    <configuration name="Movies" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="ContentManager_V3" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -75,7 +77,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/media_manager.py" />
-      <option name="PARAMETERS" value="-db &quot;C:\Storage\Videos\Movies\Movies.db&quot;" />
+      <option name="PARAMETERS" value="-db &quot;C:\Storage\Videos\Movies\Movies.db&quot; -s 1.5" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="true" />
       <option name="MODULE_MODE" value="false" />
@@ -83,9 +85,35 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="NSFW" type="PythonConfigurationType" factoryName="Python">
+      <module name="ContentManager_V3" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/media_manager.py" />
+      <option name="PARAMETERS" value="-db &quot;C:\Storage\Videos\Porn\Porn.db&quot; -s 1.5" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="true" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.NSFW" />
+      <item itemvalue="Python.Movies" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Content Manager" />
+        <item itemvalue="Python.Movies" />
       </list>
     </recent_temporary>
   </component>
@@ -225,7 +253,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763745207988</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Add database editing for title, director, cast and tags">
+      <option name="closed" value="true" />
+      <created>1763747298589</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1763747298589</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -254,6 +290,7 @@
     <MESSAGE value="Top bar, small adjustments" />
     <MESSAGE value="Rename to media_manager.py" />
     <MESSAGE value="Big changes to preview panel, small styling changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Big changes to preview panel, small styling changes" />
+    <MESSAGE value="Add database editing for title, director, cast and tags" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add database editing for title, director, cast and tags" />
   </component>
 </project>

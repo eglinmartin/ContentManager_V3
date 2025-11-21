@@ -9,7 +9,7 @@ from widgets import Partition, ImageWidget, TextWidget
 
 
 class SelectorItem(QWidget):
-    def __init__(self, player, med_item):
+    def __init__(self, player, med_item, screen_scale):
         super().__init__()
         self.setStyleSheet(f"background-color: #292929")
 
@@ -33,7 +33,7 @@ class SelectorItem(QWidget):
         self.title_label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
 
         # Set font, font size and wrapping
-        self.text_font = QFont("Bahnschrift Semibold", 14)
+        self.text_font = QFont("Bahnschrift Semibold", int(14 / screen_scale))
         self.title_label.setFont(self.text_font)
         self.title_label.setWordWrap(True)
 
@@ -49,10 +49,11 @@ class SelectorItem(QWidget):
 
 
 class SelectorPanel(Partition):
-    def __init__(self, player, color):
+    def __init__(self, player, color, screen_scale):
         super().__init__(color)
         self.player = player
         self.icon_cache = {}
+        self.screen_scale = screen_scale
 
         self.layout.setContentsMargins(20, 20, 20, 20)
         self.layout.setAlignment(Qt.AlignTop)
@@ -103,7 +104,7 @@ class SelectorPanel(Partition):
 
         self.selector_buttons = []
         for i, med_item in enumerate(self.player.filtered_media):
-            button = SelectorItem(self.player, med_item)
+            button = SelectorItem(self.player, med_item, self.screen_scale)
             self.selector_buttons.append(button)
             self.grid_layout.addWidget(button, i // 3, i % 3)
 

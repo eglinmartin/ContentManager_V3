@@ -6,7 +6,7 @@ from widgets import Partition, ImageWidget, TextWidget
 
 
 class Browser(QListWidget):
-    def __init__(self, player, color):
+    def __init__(self, player, color, screen_scale):
         super().__init__()
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.setSpacing(0)
@@ -23,18 +23,18 @@ class Browser(QListWidget):
             QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: #222222;}
             """)
 
-        self.browser_font = QFont("Bahnschrift Semibold", 16)
+        self.browser_font = QFont("Bahnschrift Semibold", int(18 / screen_scale))
         self.setFont(self.browser_font)
 
         self.itemClicked.connect(lambda item: player.filter_media(item.text(), 'director'))
 
 
 class BrowserPanel(Partition):
-    def __init__(self, player, color):
+    def __init__(self, player, color, screen_scale):
         super().__init__(color)
         self.setContentsMargins(16, 16, 16, 16)
 
-        self.list_widget = Browser(player, color)
+        self.list_widget = Browser(player, color, screen_scale)
 
         # unique_items = {'All'} | {actor for med in player.media for actor in med.cast}
         unique_items = {'All'} | {item.director for item in player.media}

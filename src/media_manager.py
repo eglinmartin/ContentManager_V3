@@ -9,7 +9,7 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QFont, QScreen, QIcon, QPalette, QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLabel, QDesktopWidget, QHBoxLayout, \
-    QSpacerItem, QSizePolicy, QPushButton
+    QSpacerItem, QSizePolicy, QPushButton, QLineEdit
 
 from browser_panel import BrowserPanel
 from handler import Media, load_media_from_json
@@ -19,7 +19,7 @@ from widgets import Partition
 
 
 class TopBar(QWidget):
-    def __init__(self, player, color):
+    def __init__(self, player, color, screen_scale):
         super().__init__()
         self.setAutoFillBackground(True)
 
@@ -27,7 +27,7 @@ class TopBar(QWidget):
         palette.setColor(QPalette.Window, QColor(color))
         self.setPalette(palette)
 
-        self.top_font = QFont("Bahnschrift Semibold", 36)
+        self.top_font = QFont("Bahnschrift Semibold", int(36 / screen_scale))
 
         # Set size
         self.setMinimumSize(1, int(player.min_height / 8))
@@ -88,8 +88,64 @@ class TopBar(QWidget):
         self.exit_button.setFixedSize(self.exit_button.height(), self.exit_button.height())
         super().resizeEvent(event)
 
+
+class BottomBar(QWidget):
+    def __init__(self, player, color, screen_scale):
+        super().__init__()
+        self.setMinimumSize(1, int(player.min_height / 12))
+        self.setMaximumSize(player.min_width, int(player.min_height / 12))
+        self.player = player
+        self.bottom_bar_font = QFont("Bahnschrift Semibold", int(24 / screen_scale))
+
+        palette = self.palette()
+        palette.setColor(QPalette.Window, QColor(color))
+        self.setPalette(palette)
+        self.setAutoFillBackground(True)
+
+        layout = QHBoxLayout()
+        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setSpacing(20)
+
+        layout.addStretch()
+
+        self.button_sort = QPushButton('Az')
+        self.button_sort.setFont(self.bottom_bar_font)
+        self.button_sort.setStyleSheet("""
+             QPushButton {color: #ffffff; background-color: #444444;}
+             QPushButton:hover {color: #ff5555;}
+             """)
+        self.button_sort.setCursor(Qt.PointingHandCursor)
+        self.button_sort.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout.addWidget(self.button_sort)
+
+        self.button_zoom = QPushButton('Zoom')
+        self.button_zoom.setFont(self.bottom_bar_font)
+        self.button_zoom.setStyleSheet("""
+            QPushButton {color: #ffffff; background-color: #444444;}
+            QPushButton:hover {color: #ff5555;}
+            """)
+        self.button_zoom.setCursor(Qt.PointingHandCursor)
+        self.button_zoom.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout.addWidget(self.button_zoom)
+
+        self.searchbar = QLineEdit()
+        self.searchbar.setStyleSheet(f"""background-color: #444444; color: #ffffff; border: none; padding: 10px;""")
+        self.searchbar.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.searchbar.setFont(self.bottom_bar_font)
+        self.searchbar.returnPressed.connect(player.filter_media)
+        self.searchbar.setPlaceholderText('Search')
+        layout.addWidget(self.searchbar)
+
+        self.setLayout(layout)
+
+    def resizeEvent(self, event):
+        self.searchbar.setFixedWidth(self.player.preview_panel.label_image.width())
+        self.button_sort.setFixedSize(self.searchbar.height(), self.searchbar.height())
+        self.button_zoom.setFixedSize(self.searchbar.height(), self.searchbar.height())
+
+
 class MainWindow(QMainWindow):
-    def __init__(self, media, screen, library_name, db):
+    def __init__(self, media, screen, library_name, db, screen_scale):
         super().__init__()
         self.media = media
         self.filtered_media = []
@@ -97,6 +153,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Media Manager")
         self.library_name = library_name
         self.db_path = db
+        self.screen_scale = screen_scale
 
         self.min_width = int(screen.size().width())
         self.min_height = int(screen.size().height())
@@ -120,27 +177,27 @@ class MainWindow(QMainWindow):
         layout.setSpacing(0)
 
         # Create the top bar
-        top_bar = TopBar(self, "#141414")
-        layout.addWidget(top_bar, 0, 0, 1, 3)
+        self.top_bar = TopBar(self, "#141414", screen_scale)
+        layout.addWidget(self.top_bar, 0, 0, 1, 3)
 
-        # Create a new bar below the top bar
-        bottom_bar = Partition("#333333")
-        bottom_bar.add_widget(QLabel(""))
-        bottom_bar.setMinimumSize(1, int(self.min_height / 12))
-        bottom_bar.setMaximumSize(self.min_width, int(self.min_height / 12))
-        layout.addWidget(bottom_bar, 1, 0, 1, 3)
+        self.filter_column = 'All'
+        self.filter_item = 'All'
 
         # Create the list menu
-        left = BrowserPanel(self, "#222222")
+        left = BrowserPanel(self, "#222222", screen_scale)
         layout.addWidget(left, 2, 0)
 
         # Create the selector menu
-        self.selector_panel = SelectorPanel(self, "#292929")
+        self.selector_panel = SelectorPanel(self, "#292929", screen_scale)
         layout.addWidget(self.selector_panel, 2, 1)
 
         # Create the preview panel
-        self.preview_panel = PreviewPanel(self, "#252525", self.selected_media)
+        self.preview_panel = PreviewPanel(self, "#252525", self.selected_media, screen_scale)
         layout.addWidget(self.preview_panel, 2, 2)
+
+        # Create a new bar below the top bar
+        self.bottom_bar = BottomBar(self, "#333333", screen_scale)
+        layout.addWidget(self.bottom_bar, 1, 0, 1, 3)
 
         # Stretch factors for columns and rows:
         layout.setRowStretch(0, 1)
@@ -153,24 +210,48 @@ class MainWindow(QMainWindow):
         layout.setColumnStretch(2, 35)
         central.setLayout(layout)
 
-        QTimer.singleShot(0, lambda: self.filter_media('all', 'all'))
+        QTimer.singleShot(0, lambda: self.filter_media())
 
     def get_icon(self, path):
         if path not in self.thumb_cache:
             self.thumb_cache[path] = QIcon(path)
         return self.thumb_cache[path]
 
-    def filter_media(self, item, filter):
+    def filter_media(self, filter_item=None, filter_column=None):
+        if filter_column:
+            self.filter_column = filter_column
+        if filter_item:
+            self.filter_item = filter_item
+
         self.filtered_media = [med for med in self.media]
 
-        if filter == 'cast':
-            self.filtered_media = [med for med in self.filtered_media if item in med.cast]
-
-        elif filter == 'director':
-            self.filtered_media = [med for med in self.filtered_media if item in med.director]
-
-        if item == 'All':
+        if self.filter_item == 'All':
             self.filtered_media = [med for med in self.media]
+
+        else:
+            if self.filter_column == 'cast':
+                self.filtered_media = [med for med in self.filtered_media if self.filter_item in med.cast]
+            elif self.filter_column == 'director':
+                self.filtered_media = [med for med in self.filtered_media if self.filter_item in med.director]
+                pass
+
+        if self.bottom_bar.searchbar.text():
+            self.search()
+
+        self.selector_panel.populate_selector()
+
+    def search(self):
+        search_text_lower = "".join(self.bottom_bar.searchbar.text().split()).lower()
+
+        self.filtered_media = [
+            med for med in self.filtered_media
+            if search_text_lower in " ".join([
+                (med.title or "").lower(),
+                (med.director or "").lower(),
+                " ".join(med.cast or []).lower(),
+                (med.tags or "").lower()
+            ])
+        ]
 
         self.selector_panel.populate_selector()
 
@@ -218,14 +299,16 @@ class MainWindow(QMainWindow):
 def main():
     parser = argparse.ArgumentParser(description='', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-db', '--db_path', type=str, required=True)
+    parser.add_argument('-s', '--screen_scale', type=str, required=True)
     args = parser.parse_args()
     media = load_media_from_json(args.db_path)
     library_name = os.path.basename(args.db_path)
+    screen_scale = float(args.screen_scale)
 
     app = QApplication(sys.argv)
     screen = app.primaryScreen()
 
-    win = MainWindow(media, screen, library_name, args.db_path)
+    win = MainWindow(media, screen, library_name, args.db_path, screen_scale)
     win.show()
     sys.exit(app.exec_())
 
