@@ -106,7 +106,17 @@ class BottomBar(QWidget):
         layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(20)
 
-        layout.addStretch()
+        self.button_browse = QPushButton('Directors')
+        self.button_browse.setFont(self.bottom_bar_font)
+        self.button_browse.setStyleSheet("""
+             QPushButton {color: #ffffff; background-color: #444444;}
+             QPushButton:hover {color: #ff5555;}
+             """)
+        self.button_browse.setCursor(Qt.PointingHandCursor)
+        self.button_browse.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout.addWidget(self.button_browse)
+
+        layout.addSpacerItem(QSpacerItem(40, 0, QSizePolicy.Fixed, QSizePolicy.Fixed))
 
         self.button_sort = QPushButton('Az')
         self.button_sort.setFont(self.bottom_bar_font)
@@ -118,15 +128,27 @@ class BottomBar(QWidget):
         self.button_sort.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         layout.addWidget(self.button_sort)
 
-        self.button_zoom = QPushButton('Zoom')
-        self.button_zoom.setFont(self.bottom_bar_font)
-        self.button_zoom.setStyleSheet("""
+        self.button_favourite = QPushButton('★')
+        self.button_favourite.setFont(self.bottom_bar_font)
+        self.button_favourite.setStyleSheet("""
+             QPushButton {color: #ffffff; background-color: #bbbb55;}
+             QPushButton:hover {color: #ffff00;}
+             """)
+        self.button_favourite.setCursor(Qt.PointingHandCursor)
+        self.button_favourite.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout.addWidget(self.button_favourite)
+
+        self.button_switcher = QPushButton('')
+        self.button_switcher.setFont(self.bottom_bar_font)
+        self.button_switcher.setStyleSheet("""
             QPushButton {color: #ffffff; background-color: #444444;}
             QPushButton:hover {color: #ff5555;}
             """)
-        self.button_zoom.setCursor(Qt.PointingHandCursor)
-        self.button_zoom.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        layout.addWidget(self.button_zoom)
+        self.button_switcher.setCursor(Qt.PointingHandCursor)
+        self.button_switcher.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout.addWidget(self.button_switcher)
+
+        layout.addStretch()
 
         self.searchbar = QLineEdit()
         self.searchbar.setStyleSheet(f"""background-color: #444444; color: #ffffff; border: none; padding: 10px;""")
@@ -136,12 +158,25 @@ class BottomBar(QWidget):
         self.searchbar.setPlaceholderText('Search')
         layout.addWidget(self.searchbar)
 
+        self.button_add = QPushButton('+')
+        self.button_add.setFont(self.bottom_bar_font)
+        self.button_add.setStyleSheet("""
+            QPushButton {color: #ffffff; background-color: #559955;}
+            QPushButton:hover {color: #00ff00;}
+            """)
+        self.button_add.setCursor(Qt.PointingHandCursor)
+        self.button_add.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        layout.addWidget(self.button_add)
+
         self.setLayout(layout)
 
     def resizeEvent(self, event):
-        self.searchbar.setFixedWidth(self.player.preview_panel.label_image.width())
+        self.button_add.setFixedSize(self.searchbar.height(), self.searchbar.height())
+        self.button_favourite.setFixedSize(self.searchbar.height(), self.searchbar.height())
+        self.button_browse.setFixedWidth(self.player.browser_panel.list_widget.width() + 10)
+        self.searchbar.setFixedWidth(self.player.preview_panel.label_image.width() - 20 - self.button_add.width())
         self.button_sort.setFixedSize(self.searchbar.height(), self.searchbar.height())
-        self.button_zoom.setFixedSize(self.searchbar.height(), self.searchbar.height())
+        self.button_switcher.setFixedSize(self.searchbar.height() * 4, self.searchbar.height())
 
 
 class MainWindow(QMainWindow):
@@ -184,8 +219,8 @@ class MainWindow(QMainWindow):
         self.filter_item = 'All'
 
         # Create the list menu
-        left = BrowserPanel(self, "#222222", screen_scale)
-        layout.addWidget(left, 2, 0)
+        self.browser_panel = BrowserPanel(self, "#222222", screen_scale)
+        layout.addWidget(self.browser_panel, 2, 0)
 
         # Create the selector menu
         self.selector_panel = SelectorPanel(self, "#292929", screen_scale)
@@ -232,7 +267,6 @@ class MainWindow(QMainWindow):
             if self.filter_column == 'cast':
                 self.filtered_media = [med for med in self.filtered_media if self.filter_item in med.cast]
             elif self.filter_column == 'director':
-                print(str(self.filter_item).split(' (')[0])
                 self.filtered_media = [med for med in self.filtered_media if str(self.filter_item).split(' (')[0] in med.director]
                 pass
 

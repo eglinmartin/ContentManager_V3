@@ -28,7 +28,7 @@ class SelectorItem(QWidget):
 
         # Create title label
         self.title_label = QLabel(med_item.title)
-        self.title_label.setStyleSheet(f"color: #ffffff; text-align: left top; padding: 2px; background-color: #1d1d1d;")
+        self.title_label.setStyleSheet(f"color: #ffffff; text-align: left top; padding: 5px; background-color: #1d1d1d;")
         self.title_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         self.title_label.setAlignment(Qt.AlignTop | Qt.AlignLeft)
 
