@@ -1,7 +1,12 @@
+import os
+import random
 import sqlite3
+
 from dataclasses import dataclass
 from datetime import datetime
 from typing import List
+
+from PyQt5.QtWidgets import QFileDialog
 
 
 @dataclass
@@ -39,6 +44,21 @@ def load_media_from_json(db_path: str) -> List[Media]:
     return media_list
 
 
+def insert_row(player, file_name, code):
+    conn = sqlite3.connect(player.db_path)
+    cursor = conn.cursor()
+
+    query = f"""
+        INSERT INTO Media
+        ("ID", "Title", "Director", "Cast", "Date", "Type")
+        VALUES ({code}, '{file_name}', 'Unknown', 'Unknown', '1900-01-01', 'Video');
+    """
+    cursor.execute(query)
+
+    conn.commit()
+    conn.close()
+
+
 def update_db(player, column: str, value: str):
     conn = sqlite3.connect(player.db_path)
     cursor = conn.cursor()
@@ -50,7 +70,7 @@ def update_db(player, column: str, value: str):
             elif column == 'Director':
                 med.director = value
             elif column == 'Cast':
-                med.cast = value
+                med.cast = [value]
             elif column == 'Tags':
                 med.tags = value
 

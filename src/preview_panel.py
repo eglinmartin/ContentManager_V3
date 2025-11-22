@@ -23,6 +23,7 @@ class PreviewPanel(Partition):
         # Create main image label
         self.label_image = ImageWidget(self, back_col='#252525', font_col='#ffffff', alignment=Qt.AlignCenter)
         self.label_image.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.label_image.clicked.connect(self.player.add_thumbnail)
         self.layout.addWidget(self.label_image, alignment=Qt.AlignTop)
 
         self.layout.addSpacing(10)

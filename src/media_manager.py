@@ -2,15 +2,16 @@ import argparse
 import ctypes
 import os
 import random
+import shutil
 import sys
 from datetime import datetime
 
-from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QFont, QScreen, QIcon, QPalette, QColor
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLabel, QDesktopWidget, QHBoxLayout, \
-    QSpacerItem, QSizePolicy, QPushButton, QLineEdit
+from PyQt5.QtGui import QFont, QIcon, QPalette, QColor
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLabel, QHBoxLayout, \
+    QSpacerItem, QSizePolicy, QPushButton, QLineEdit, QFileDialog
 
+import handler
 from browser_panel import BrowserPanel
 from handler import Media, load_media_from_json
 from preview_panel import PreviewPanel
@@ -166,6 +167,7 @@ class BottomBar(QWidget):
             """)
         self.button_add.setCursor(Qt.PointingHandCursor)
         self.button_add.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.button_add.clicked.connect(self.player.add_video)
         layout.addWidget(self.button_add)
 
         self.setLayout(layout)
@@ -329,6 +331,41 @@ class MainWindow(QMainWindow):
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
+
+    def add_thumbnail(self):
+        src_path, _ = QFileDialog.getOpenFileName(self, "Select an image", "", "Images (*.png *.jpg *.jpeg *.bmp)")
+        if not src_path:
+            return
+
+        code = self.selected_media.code
+        dest_path = fr"C:\Storage\Programming\ContentManager_V3\bin\{code}"
+        shutil.copyfile(src_path, dest_path)
+
+        for button in self.selector_panel.selector_buttons:
+            if button.med_item.code == code:
+                button.set_icon(code)
+
+        self.selector_panel.populate_selector()
+        self.select_media(code)
+
+    def add_video(self):
+        file_path, _ = QFileDialog.getOpenFileName(self, "Select File")
+        if not file_path:
+            return
+
+        file_name = os.path.splitext(os.path.basename(file_path))[0]
+        code = random.randint(1, 99999)
+
+        handler.insert_row(self, file_name, code)
+
+        self.media.append(Media(
+            title=file_name, director='Unknown', cast=['Unknown',], code=code,
+            date=datetime.fromisoformat('1900-01-01'), media_type='Video', tags=[])
+        )
+        self.media.sort(key=lambda m: m.title)
+        self.filter_media()
+        self.selector_panel.populate_selector()
+        self.select_media(code)
 
 
 def main():

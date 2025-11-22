@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QSizePolicy, QTextEdit, QLineEdit
 from PyQt5.QtGui import QPalette, QColor, QPixmap, QFont, QPainter, QTextOption
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal
 
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtGui import QPixmap, QPainter, QColor, QFont
@@ -10,6 +10,8 @@ import handler
 
 
 class ImageWidget(QLabel):
+    clicked = pyqtSignal()
+
     def __init__(self, parent, back_col: str, font_col: str, alignment, text=None):
         super().__init__(parent)
         self.setStyleSheet(f"background-color: {back_col}; color: {font_col};")
@@ -41,6 +43,11 @@ class ImageWidget(QLabel):
         side_length = self.width()
         self.resize(side_length, side_length)
         self.update_image()
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.clicked.emit()
+        super().mousePressEvent(event)
 
     def update_image(self):
         """

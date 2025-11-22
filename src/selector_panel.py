@@ -12,6 +12,8 @@ class SelectorItem(QWidget):
     def __init__(self, player, med_item, screen_scale):
         super().__init__()
         self.setStyleSheet(f"background-color: #292929")
+        self.player = player
+        self.med_item = med_item
 
         # Create vertical box
         layout = QVBoxLayout(self)
@@ -40,6 +42,11 @@ class SelectorItem(QWidget):
         # Add both widgets to vertical box
         layout.addWidget(self.image_button, alignment=Qt.AlignTop)
         layout.addWidget(self.title_label, alignment=Qt.AlignTop)
+
+    def set_icon(self, code):
+        cached_thumb = [thumb for thumb in self.player.thumb_cache if str(code) in thumb][0]
+        self.player.thumb_cache.pop(cached_thumb)
+        self.image_button.setIcon(self.player.get_icon(fr"C:\Storage\Programming\ContentManager_V3\bin\{code}"))
 
     def resizeEvent(self, event):
         self.image_button.setFixedHeight(int(self.image_button.width() * 0.562))
